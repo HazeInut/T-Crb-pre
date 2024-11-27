@@ -140,6 +140,8 @@ def master_flat(images, master_zero_path, master_dark_path, filte):
     zflatlist = []
 
     for hdu, fname in images.hdus(return_fname=True):
+	meta = hdu.header
+        flat = CCDData(data=hdu.data.astype(np.int16), meta=meta, unit="adu")
         zflat = ccdproc.subtract_bias(flat, mzero)
 
         dzflat = ccdproc.subtract_dark(
